@@ -13,7 +13,11 @@
 
     define(['backbone', 'hoodie'], factory);
 
+  } else {
+    // Browser globals
+    root.Backbone.hoodie = factory(root.Backbone, root.Hoodie);
   }
+
 }(this, function (Backbone, Hoodie) {
 
   'use strict';
