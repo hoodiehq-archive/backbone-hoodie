@@ -97,7 +97,7 @@
 
       Backbone.hoodie.store.on(type + ':add', function (attributes, options) {
         var record;
-        self.add(attributes);
+        self.add(attributes, options);
         record = self.get(attributes.id);
         self.trigger('create', record, options);
       });
