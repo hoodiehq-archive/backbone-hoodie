@@ -100,12 +100,21 @@
       store.on('add', function (attributes, options) {
         var record;
 
+        // see https://github.com/hoodiehq/backbone-hoodie/issues/3
+        if (self.storeBindingFilter && !self.storeBindingFilter(attributes)) {
+          return;
+        }
+
         record = self.add(attributes, options);
         self.trigger('create', record, options);
       });
 
       store.on('remove', function (attributes, options) {
         var record;
+
+        if (self.storeBindingFilter && !self.storeBindingFilter(attributes)) {
+          return;
+        }
 
         record = self.get(attributes.id);
         if (record) {
@@ -115,6 +124,10 @@
 
       store.on('update', function (attributes, options) {
         var record;
+
+        if (self.storeBindingFilter && !self.storeBindingFilter(attributes)) {
+          return;
+        }
 
         record = self.get(attributes.id);
         if (options.remote && record) {
