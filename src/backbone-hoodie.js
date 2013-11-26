@@ -86,23 +86,25 @@
   Backbone.Collection.prototype.initialize = function () {
     var type;
     var self = this;
+    var store;
 
     if (! this.model) {
       return;
     }
 
     type = this.model.type;
-    this.fetch();
+
     if (type) {
 
-      Backbone.hoodie.store.on(type + ':add', function (attributes, options) {
+      store = Backbone.hoodie.store(type);
+      store.on('add', function (attributes, options) {
         var record;
-        self.add(attributes, options);
-        record = self.get(attributes.id);
+
+        record = self.add(attributes, options);
         self.trigger('create', record, options);
       });
 
-      Backbone.hoodie.store.on(type + ':remove', function (attributes, options) {
+      store.on('remove', function (attributes, options) {
         var record;
 
         record = self.get(attributes.id);
@@ -111,7 +113,7 @@
         }
       });
 
-      Backbone.hoodie.store.on(type + ':update', function (attributes, options) {
+      store.on('update', function (attributes, options) {
         var record;
 
         record = self.get(attributes.id);
