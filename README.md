@@ -1,46 +1,47 @@
-backbone-hoodie adapter
-
-Ben Nevile, http://mainsocial.com
-
-(begun by gr2m -- https://github.com/hoodiehq/hoodie.js/pull/56#issuecomment-17736543)
-
+##backbone-hoodie adapter
 
 Use this adapter to keep maintain sync between your local Backbone.Collections and the local and remote hoodie datastores.
 
 
 
-```coffeescript
-Backbone.connect() #creates a new hoodie at Backbone.hoodie
+```javascript
+Backbone.connect() //creates a new hoodie at Backbone.hoodie
 
+var Task = Backbone.Model.extend({
+  // models must have a type. maps to type in hoodie store.
+  type: 'task',
+  defaults: {
+    name: 'New Task'
+  }
+});
 
-class Task extends Backbone.Model
-  # models must have a type. maps to type in hoodie store.
-  type: "task"
-  
-  defaults: 
-    name: "New Task"
-
-
-class TaskCollection extends Backbone.Collection  
-  # if a collection has a model, the adapter will keep the collection
-  # up to date with all the models in the local store, as well as remote events
+var TaskCollection = Backbone.Collection.extend({
+  // if a collection has a model, the adapter will keep the collection
+  // up to date with all the models in the local store, as well as remote events
   model: Task 
+})
 
+var task = new Task({
+  name: 'laundry'
+});
 
-t = new Task {name:"laundry"}
-t.save() 
-# t will be saved into the hoodie store
+// task will be saved into the hoodie store
+task.save();
 
-tasks = new TaskCollection()
-# upon initialization, tasks will fetch() all Task models from the datastore.
-# it'll find t and insert t in tasks.
+var tasks = new TaskCollection();
 
-t2 = new Task {name:"groceries"}
-t2.save()
-# t2 will be saved into the hoodie store
-# and will also be inserted into tasks
+// upon initialization, tasks will fetch() all Task models from the datastore.
+// it'll find t and insert t in tasks.
 
-t.destroy()
-# t will be deleted from the store
-# and will be removed from tasks
+task2 = new Task({
+  name: 'groceries'
+});
+
+task2.save();
+// task2 will be saved into the hoodie store
+// and will also be inserted into tasks
+
+task.destroy();
+// task will be deleted from the store
+// and will be removed from tasks
 ```
