@@ -1,5 +1,6 @@
 {
   "name": "backbone-hoodie",
+  "version": "1.0.1",
   "description": "hoodie data bindings for backbone models",
   "keywords": [
     "backbone",
@@ -8,12 +9,6 @@
     "binding",
     "data"
   ],
-  "author": {
-    "name": "Ben Nevile",
-    "email": "ben@mainsocial.com",
-    "web": "http://mainsocial.com"
-  },
-  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/bbn/backbone-hoodie.git"
@@ -21,19 +16,10 @@
   "github": "https://github.com/bbn/backbone-hoodie",
   "license": "MIT",
   "dependencies": {
-    "hoodie-app": "git://github.com/hoodiehq/hoodie-app.git",
-    "underscore": ">=1.4.3",
-    "backbone": ">=0.9.9",
-    "hoodie": "~0.1.24"
+    "backbone": "^1.0.0",
+    "hoodie": "^0.6.x"
   },
-  "main": "backbone-hoodie",
-  "domains": [
-    "admin.hoodie-vibrations.jit.su",
-    "couch.hoodie-vibrations.jit.su"
-  ],
-  "scripts": {
-    "start": "node node_modules/hoodie-app/bin/start"
-  },
+  "main": "src/backbone-hoodie",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
