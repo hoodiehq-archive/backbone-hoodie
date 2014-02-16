@@ -13,7 +13,7 @@
     "email": "ben@mainsocial.com",
     "web": "http://mainsocial.com"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/bbn/backbone-hoodie.git"
