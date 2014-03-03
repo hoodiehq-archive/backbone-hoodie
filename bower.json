@@ -4,6 +4,6 @@
   "main": "backbone-hoodie.js",
   "dependencies": {
     "backbone": "^1.0.0",
-    "hoodie": "^0.6.x"
+    "hoodie": "*"
   }
 }
