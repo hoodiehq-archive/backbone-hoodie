@@ -37,6 +37,8 @@
       type = modelOrCollection.model.prototype.type;
     }
 
+    options.backbone = true;
+
     switch (method) {
     case 'read':
       if (id) {
