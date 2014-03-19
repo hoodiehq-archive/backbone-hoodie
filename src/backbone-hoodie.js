@@ -30,7 +30,7 @@
     var attributes, id, promise, type;
 
     id = modelOrCollection.id;
-    attributes = modelOrCollection.attributes;
+    attributes = modelOrCollection.toJSON();
     type = modelOrCollection.type;
 
     if (! type) {
