@@ -30,12 +30,14 @@
     var attributes, id, promise, type;
 
     id = modelOrCollection.id;
-    attributes = modelOrCollection.attributes;
+    attributes = options.attrs || modelOrCollection.toJSON();
     type = modelOrCollection.type;
 
     if (! type) {
       type = modelOrCollection.model.prototype.type;
     }
+
+    options.backbone = true;
 
     switch (method) {
     case 'read':
