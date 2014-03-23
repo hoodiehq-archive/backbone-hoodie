@@ -37,6 +37,8 @@
       type = modelOrCollection.model.prototype.type;
     }
 
+    options.backbone = true;
+
     switch (method) {
     case 'read':
       if (id) {
@@ -56,13 +58,13 @@
       });
       break;
     case 'update':
-      promise = Backbone.hoodie.store.updateOrAdd(type, id, attributes)
+      promise = Backbone.hoodie.store.updateOrAdd(type, id, attributes, options)
       .done(function (attributes) {
         modelOrCollection.set(attributes);
       });
       break;
     case 'delete':
-      promise = Backbone.hoodie.store.remove(type, id);
+      promise = Backbone.hoodie.store.remove(type, id, options);
     }
 
     if (options.success) {
