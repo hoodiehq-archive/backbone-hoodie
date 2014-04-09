@@ -58,7 +58,7 @@
       });
       break;
     case 'update':
-      promise = Backbone.hoodie.store.updateOrAdd(type, id, attributes)
+      promise = Backbone.hoodie.store.updateOrAdd(type, id, modelOrCollection.changed)
       .done(function (attributes) {
         modelOrCollection.set(attributes);
       });
