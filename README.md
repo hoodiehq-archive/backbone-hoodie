@@ -1,6 +1,6 @@
 ##backbone-hoodie adapter
 
-Use this adapter to keep maintain sync between your local Backbone.Collections and the local and remote hoodie datastores.
+Use this adapter to maintain sync between your local Backbone.Collections and the local and remote hoodie datastores.
 
 
 
