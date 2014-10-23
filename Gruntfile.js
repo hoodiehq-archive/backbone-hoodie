@@ -2,6 +2,8 @@ module.exports = function (grunt) {
 
   'use strict';
 
+  require('load-grunt-tasks')(grunt);
+
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -37,14 +39,20 @@ module.exports = function (grunt) {
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint']
+    },
+
+    karma: {
+      unit: {
+        options: {
+          configFile: 'karma.conf.js',
+          browsers: ['PhantomJS']
+        }
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-
   grunt.registerTask('default', ['jshint', 'uglify']);
+  grunt.registerTask('test', ['karma:unit']);
 
 };
 
