@@ -8,11 +8,13 @@ describe('Backbone.Model', function () {
     Backbone.connect();
 
     this.Task = Backbone.Model.extend({
-      type: 'task',
-      defaults: {
-        name: 'New Task'
-      }
+      type: 'task'
     });
+
+    this.testAttributes = {
+      id: 'juyc3ej',
+      name: 'New Task'
+    };
 
     this.sandbox = sinon.sandbox.create();
 
@@ -33,10 +35,20 @@ describe('Backbone.Model', function () {
     });
 
     it('calls Backbone.Model.prototype.set with the given attributes and the remote option', function() {
-      var task = new this.Task({ foo: 'something' });
+      var task = new this.Task(this.testAttributes);
       var spy = this.sandbox.spy(task, 'set');
-      task.merge({ bar: 'something else'});
-      expect(spy).to.have.been.calledWith({ bar: 'something else' }, { remote: true });
+
+      task.merge({
+        name: 'Updated Name',
+        tags: 'foo, bar, baz'
+      });
+
+      expect(spy).to.have.been.calledWith({
+        name: 'Updated Name',
+        tags: 'foo, bar, baz'
+      }, {
+        remote: true
+      });
     });
   });
 
@@ -48,11 +60,12 @@ describe('Backbone.Model', function () {
         this.spyOnSuccess = sinon.spy();
         this.spyOnError = sinon.spy();
 
-        this.task = new this.Task({});
+        this.task = new this.Task({ name: 'New Task' });
 
-        this.task.save();
-
-        this.task.save({}, { success: this.spyOnSuccess, error: this.spyOnError });
+        this.task.save({}, {
+          success: this.spyOnSuccess,
+          error: this.spyOnError
+        });
       });
 
       it('delegates to Backbone.hoodie.store.add', function () {
@@ -61,11 +74,11 @@ describe('Backbone.Model', function () {
 
       describe('success', function () {
         beforeEach(function () {
-          this.deferred.resolve({ id: 'juyc3ej' });
+          this.deferred.resolve(this.testAttributes);
         });
 
         it('updates the attributes', function () {
-          expect(this.task.attributes).to.deep.eql({ id: 'juyc3ej', name: 'New Task' });
+          expect(this.task.attributes).to.deep.eql(this.testAttributes);
         });
 
         it('calls the success callback', function () {
@@ -91,27 +104,29 @@ describe('Backbone.Model', function () {
         this.spyOnSuccess = sinon.spy();
         this.spyOnError = sinon.spy();
 
-        this.task = new this.Task({ id: 'i61zz3i' });
+        this.task = new this.Task(this.testAttributes);
 
-        this.task.save({ foo: 'something' }, { success: this.spyOnSuccess, error: this.spyOnError });
+        this.task.save({
+          name: 'Updated Name'
+        }, {
+          success: this.spyOnSuccess,
+          error: this.spyOnError
+        });
       });
 
       it('delegates to Backbone.hoodie.store.updateOrAdd with the changed attributes', function () {
-        expect(this.stub).to.have.been.calledWith('task', this.task.id, { foo: 'something' });
+        expect(this.stub).to.have.been.calledWith('task', this.task.id, { name: 'Updated Name' });
       });
 
       describe('success', function () {
         beforeEach(function () {
-          this.deferred.resolve({ updatedAt: '2014-10-24T00:04:50.454Z' });
+          this.updatedTestAttributes = this.testAttributes;
+          this.updatedTestAttributes.name = 'Updated Name';
+          this.deferred.resolve(this.updatedTestAttributes);
         });
 
         it('updates the attributes', function () {
-          expect(this.task.attributes).to.deep.eql({
-            id: 'i61zz3i',
-            updatedAt: '2014-10-24T00:04:50.454Z',
-            name: 'New Task',
-            foo: 'something',
-          });
+          expect(this.task.attributes).to.deep.eql(this.updatedTestAttributes);
         });
 
         it('calls the success callback', function () {
@@ -138,10 +153,11 @@ describe('Backbone.Model', function () {
       this.spyOnSuccess = sinon.spy();
       this.spyOnError = sinon.spy();
 
-      this.task = new this.Task({});
-      this.task.save();
-
-      this.task.fetch({ success: this.spyOnSuccess, error: this.spyOnError });
+      this.task = new this.Task({ id: this.testAttributes.id } );
+      this.task.fetch({
+        success: this.spyOnSuccess,
+        error: this.spyOnError
+      });
     });
 
     it('delegates to Backbone.hoodie.store.find', function () {
@@ -150,7 +166,11 @@ describe('Backbone.Model', function () {
 
     describe('success', function () {
       beforeEach(function () {
-        this.deferred.resolve();
+        this.deferred.resolve(this.testAttributes);
+      });
+
+      it('updates the attributes', function () {
+        expect(this.task.attributes).to.deep.eql(this.testAttributes);
       });
 
       it('calls the success callback', function () {
@@ -176,10 +196,13 @@ describe('Backbone.Model', function () {
       this.spyOnSuccess = sinon.spy();
       this.spyOnError = sinon.spy();
 
-      this.task = new this.Task({});
+      this.task = new this.Task(this.testAttributes);
       this.task.save();
 
-      this.task.destroy({ success: this.spyOnSuccess, error: this.spyOnError });
+      this.task.destroy({
+        success: this.spyOnSuccess,
+        error: this.spyOnError
+      });
     });
 
     it('delegates to Backbone.hoodie.store.remove', function () {
