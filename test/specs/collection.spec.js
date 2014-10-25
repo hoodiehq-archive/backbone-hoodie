@@ -5,7 +5,7 @@
 describe('Backbone.Collection', function () {
 
   beforeEach(function () {
-    Backbone.connect();
+    Backbone.connect("http://example.com");
 
     this.Task = Backbone.Model.extend({
       type: 'task'
