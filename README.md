@@ -1,11 +1,11 @@
-##backbone-hoodie adapter
+# backbone-hoodie adapter
 
 Use this adapter to maintain sync between your local Backbone.Collections and the local and remote hoodie datastores.
 
-
+## Usage
 
 ```javascript
-Backbone.connect() //creates a new hoodie at Backbone.hoodie
+Backbone.connect('https://yourapp.hood.ie') //creates a new hoodie at Backbone.hoodie
 
 var Task = Backbone.Model.extend({
   // models must have a type. maps to type in hoodie store.
@@ -45,3 +45,17 @@ task.destroy();
 // task will be deleted from the store
 // and will be removed from tasks
 ```
+
+## Tests
+
+The test are using PhantomJS Karma, Mocha, Sinon, Chai.
+
+Install the dependencies:
+
+    npm install -g phantomjs
+    npm install -g grunt-cli
+    npm install
+
+Run the tests via Grunt:
+
+    grunt test
