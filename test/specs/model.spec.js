@@ -15,6 +15,12 @@ describe('Backbone.Model', function () {
     });
 
     this.sandbox = sinon.sandbox.create();
+
+    var deferred = jQuery.Deferred();
+    this.deferred = deferred;
+    this.promiseMethodStub = function () {
+      return deferred.promise();
+    };
   });
 
   afterEach(function () {
@@ -37,12 +43,7 @@ describe('Backbone.Model', function () {
   describe('Backbone.Model.prototype.save', function() {
     describe('for a new model', function() {
       beforeEach(function () {
-        var deferred = jQuery.Deferred();
-        this.deferred = deferred;
-
-        this.stub = this.sandbox.stub(Backbone.hoodie.store, 'add', function () {
-          return deferred.promise();
-        });
+        this.stub = this.sandbox.stub(Backbone.hoodie.store, 'add', this.promiseMethodStub);
 
         this.spyOnSuccess = sinon.spy();
         this.spyOnError = sinon.spy();
@@ -85,12 +86,7 @@ describe('Backbone.Model', function () {
 
     describe('for an existing model', function() {
       beforeEach(function () {
-        var deferred = jQuery.Deferred();
-        this.deferred = deferred;
-
-        this.stub = this.sandbox.stub(Backbone.hoodie.store, 'updateOrAdd', function () {
-          return deferred.promise();
-        });
+        this.stub = this.sandbox.stub(Backbone.hoodie.store, 'updateOrAdd', this.promiseMethodStub);
 
         this.spyOnSuccess = sinon.spy();
         this.spyOnError = sinon.spy();
@@ -137,12 +133,7 @@ describe('Backbone.Model', function () {
 
   describe('Backbone.Model.prototype.fetch', function() {
     beforeEach(function () {
-      var deferred = jQuery.Deferred();
-      this.deferred = deferred;
-
-      this.stub = this.sandbox.stub(Backbone.hoodie.store, 'find', function () {
-        return deferred.promise();
-      });
+      this.stub = this.sandbox.stub(Backbone.hoodie.store, 'find', this.promiseMethodStub);
 
       this.spyOnSuccess = sinon.spy();
       this.spyOnError = sinon.spy();
@@ -180,12 +171,7 @@ describe('Backbone.Model', function () {
 
   describe('Backbone.Model.prototype.destroy', function() {
     beforeEach(function () {
-      var deferred = jQuery.Deferred();
-      this.deferred = deferred;
-
-      this.stub = this.sandbox.stub(Backbone.hoodie.store, 'remove', function () {
-        return deferred.promise();
-      });
+      this.stub = this.sandbox.stub(Backbone.hoodie.store, 'remove', this.promiseMethodStub);
 
       this.spyOnSuccess = sinon.spy();
       this.spyOnError = sinon.spy();
