@@ -33,6 +33,14 @@ describe('Backbone.Collection', function () {
     this.sandbox.restore();
   });
 
+  describe('Backbone.Collection.prototype.initialize', function() {
+    it('initializes the hoodie store', function () {
+      var spy = this.sandbox.spy(Backbone.hoodie, 'store');
+      this.tasks = new this.Tasks();
+      expect(spy).to.have.been.calledWith('task');
+    });
+  });
+
   describe('Backbone.Collection.prototype.create', function() {
     beforeEach(function () {
       this.stub = this.sandbox.stub(Backbone.hoodie.store, 'add', this.promiseMethodStub);

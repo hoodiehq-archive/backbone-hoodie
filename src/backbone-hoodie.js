@@ -94,7 +94,7 @@
       return;
     }
 
-    type = this.model.type;
+    type = this.model.prototype.type;
 
     if (type) {
 
