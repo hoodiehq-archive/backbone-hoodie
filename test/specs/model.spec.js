@@ -66,7 +66,7 @@ describe('Backbone.Model', function () {
       });
 
       it('delegates to Backbone.hoodie.store.add', function () {
-        expect(this.stub).to.have.been.calledWith('task', this.newTaskAttributes);
+        expect(this.stub).to.have.been.calledWith('task', this.newTaskAttributes, { backbone: true });
       });
 
       describe('success', function () {
@@ -110,7 +110,7 @@ describe('Backbone.Model', function () {
       });
 
       it('delegates to Backbone.hoodie.store.updateOrAdd with the changed attributes', function () {
-        expect(this.stub).to.have.been.calledWith('task', this.task.id, this.changedTaskAttributes);
+        expect(this.stub).to.have.been.calledWith('task', this.task.id, this.changedTaskAttributes, { backbone: true });
       });
 
       describe('success', function () {
@@ -199,7 +199,7 @@ describe('Backbone.Model', function () {
     });
 
     it('delegates to Backbone.hoodie.store.remove', function () {
-      expect(this.stub).to.have.been.calledWith('task', this.taskAttributes.id);
+      expect(this.stub).to.have.been.calledWith('task', this.taskAttributes.id, { backbone: true });
     });
 
     describe('success', function () {
