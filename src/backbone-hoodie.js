@@ -79,12 +79,6 @@
     return promise;
   };
 
-  Backbone.Model.prototype.merge = function (attributes) {
-    this.set(attributes, {
-      remote: true
-    });
-  };
-
   Backbone.Collection.prototype.initialize = function () {
     var type;
     var self = this;
@@ -129,7 +123,7 @@
 
         record = self.get(attributes.id);
         if (record) {
-          record.merge(attributes);
+          record.set(attributes, options);
         }
       });
     }

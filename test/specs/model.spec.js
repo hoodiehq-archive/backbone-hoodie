@@ -49,23 +49,6 @@ describe('Backbone.Model', function () {
     this.sandbox.restore();
   });
 
-  describe('Backbone.Model.prototype.merge', function() {
-    it('defines Backbone.Model.prototype.merge', function() {
-      expect(Backbone.Model.prototype.merge).to.be.an.instanceof(Function);
-    });
-
-    it('calls Backbone.Model.prototype.set with the given attributes and the remote option', function() {
-      var task = new this.Task(this.taskAttributes);
-      var spy = this.sandbox.spy(task, 'set');
-
-      task.merge(this.changedTaskAttributes);
-
-      expect(spy).to.have.been.calledWith(this.changedTaskAttributes, {
-        remote: true
-      });
-    });
-  });
-
   describe('Backbone.Model.prototype.save', function() {
     describe('for a new model', function() {
       beforeEach(function () {
