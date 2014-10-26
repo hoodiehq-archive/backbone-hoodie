@@ -59,9 +59,18 @@ describe('Backbone.Collection', function () {
         });
 
         describe('triggered outside of backbone', function () {
-          it('adds a new model to the collection', function () {
+          beforeEach(function () {
+            this.storeAddSpy = this.sandbox.spy(Backbone.hoodie.store, 'add');
+
             this.events.add(this.testAttributes, { backbone: false });
-            expect(this.addSpy).to.have.been.calledWith(this.testAttributes, { backbone: false });
+          });
+
+          it('adds a new model to the collection', function () {
+            expect(this.addSpy).to.have.been.calledWith(this.testAttributes);
+          });
+
+          it('does not delegate to the store again', function () {
+            expect(this.storeAddSpy).to.not.have.been.called;
           });
         });
 
@@ -81,10 +90,19 @@ describe('Backbone.Collection', function () {
 
         describe('triggered outside of backbone', function () {
           describe('when the model exists', function () {
-            it('updates the model', function () {
+            beforeEach(function () {
+              this.storeUpdateOrAddSpy = this.sandbox.spy(Backbone.hoodie.store, 'updateOrAdd');
+
               this.tasks.add(this.task);
               this.events.update(this.testAttributes, { backbone: false });
-              expect(this.setSpy).to.have.been.calledWith(this.testAttributes, { backbone: false });
+            });
+
+            it('updates the model', function () {
+              expect(this.setSpy).to.have.been.calledWith(this.testAttributes);
+            });
+
+            it('does not delegate to the store again', function () {
+              expect(this.storeUpdateOrAddSpy).to.not.have.been.called;
             });
           });
 
@@ -112,10 +130,19 @@ describe('Backbone.Collection', function () {
 
         describe('triggered outside of backbone', function () {
           describe('when the model exists', function () {
-            it('removes the model from the collection', function () {
+            beforeEach(function () {
+              this.storeRemoveSpy = this.sandbox.spy(Backbone.hoodie.store, 'remove');
+
               this.tasks.add(this.task);
               this.events.remove(this.testAttributes, { backbone: false });
+            });
+
+            it('removes the model from the collection', function () {
               expect(this.destroySpy).to.have.been.called;
+            });
+
+            it('does not delegate to the store again', function () {
+              expect(this.storeRemoveSpy).to.not.have.been.called;
             });
           });
 
