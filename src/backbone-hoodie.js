@@ -90,31 +90,27 @@
     var self = this;
     var store;
 
-    if (! this.model) {
+    if (!this.model) {
       return;
     }
 
-    type = this.model.type;
+    type = this.model.prototype.type;
 
     if (type) {
-
       store = Backbone.hoodie.store(type);
-      store.on('add', function (attributes, options) {
-        var record;
 
-        // see https://github.com/hoodiehq/backbone-hoodie/issues/3
-        if (self.storeBindingFilter && !self.storeBindingFilter(attributes)) {
+      store.on('add', function (attributes, options) {
+        if (!options.remote) {
           return;
         }
 
-        record = self.add(attributes, options);
-        self.trigger('create', record, options);
+        self.add(attributes, options);
       });
 
       store.on('remove', function (attributes, options) {
         var record;
 
-        if (self.storeBindingFilter && !self.storeBindingFilter(attributes)) {
+        if (!options.remote) {
           return;
         }
 
@@ -127,16 +123,14 @@
       store.on('update', function (attributes, options) {
         var record;
 
-        if (self.storeBindingFilter && !self.storeBindingFilter(attributes)) {
+        if (!options.remote) {
           return;
         }
 
         record = self.get(attributes.id);
-        if (options.remote && record) {
+        if (record) {
           record.merge(attributes);
         }
-
-        self.trigger('update', record, options);
       });
     }
   };
