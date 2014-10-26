@@ -22,8 +22,12 @@
 
   'use strict';
 
-  Backbone.connect = function (url) {
-    Backbone.hoodie = new Hoodie(url);
+  Backbone.connect = function () {
+    if (arguments[0] instanceof Hoodie) {
+      Backbone.hoodie = arguments[0];
+    } else {
+      Backbone.hoodie = new Hoodie(arguments[0]);
+    }
   };
 
   Backbone.sync = function (method, modelOrCollection, options) {
