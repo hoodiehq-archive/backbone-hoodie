@@ -66,7 +66,9 @@ describe('Backbone.Collection', function () {
           });
 
           it('adds a new model to the collection', function () {
-            expect(this.addSpy).to.have.been.calledWith(this.testAttributes);
+            expect(this.addSpy).to.have.been.calledWith(this.testAttributes, {
+              hoodie: true
+            });
           });
 
           it('does not delegate to the store again', function () {
@@ -98,7 +100,9 @@ describe('Backbone.Collection', function () {
             });
 
             it('updates the model', function () {
-              expect(this.setSpy).to.have.been.calledWith(this.testAttributes);
+              expect(this.setSpy).to.have.been.calledWith(this.testAttributes, {
+                hoodie: true
+              });
             });
 
             it('does not delegate to the store again', function () {
@@ -138,7 +142,9 @@ describe('Backbone.Collection', function () {
             });
 
             it('removes the model from the collection', function () {
-              expect(this.destroySpy).to.have.been.called;
+              expect(this.destroySpy).to.have.been.calledWith({
+                hoodie: true
+              });
             });
 
             it('does not delegate to the store again', function () {

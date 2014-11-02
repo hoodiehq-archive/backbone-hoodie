@@ -104,7 +104,9 @@
           return;
         }
 
-        self.add(attributes);
+        self.add(attributes, {
+          hoodie: true
+        });
       });
 
       store.on('remove', function (attributes, options) {
@@ -131,7 +133,9 @@
 
         record = self.get(attributes.id);
         if (record) {
-          record.set(attributes);
+          record.set(attributes, {
+            hoodie: true
+          });
         }
       });
     }
