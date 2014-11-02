@@ -62,12 +62,16 @@ describe('Backbone.Collection', function () {
           beforeEach(function () {
             this.storeAddSpy = this.sandbox.spy(Backbone.hoodie.store, 'add');
 
-            this.events.add(this.testAttributes, { backbone: false });
+            this.events.add(this.testAttributes, {
+              backbone: false,
+              remote: true
+            });
           });
 
           it('adds a new model to the collection', function () {
             expect(this.addSpy).to.have.been.calledWith(this.testAttributes, {
-              hoodie: true
+              hoodie: true,
+              remote: true
             });
           });
 
@@ -96,12 +100,16 @@ describe('Backbone.Collection', function () {
               this.storeUpdateOrAddSpy = this.sandbox.spy(Backbone.hoodie.store, 'updateOrAdd');
 
               this.tasks.add(this.task);
-              this.events.update(this.testAttributes, { backbone: false });
+              this.events.update(this.testAttributes, {
+                backbone: false,
+                remote: true
+              });
             });
 
             it('updates the model', function () {
               expect(this.setSpy).to.have.been.calledWith(this.testAttributes, {
-                hoodie: true
+                hoodie: true,
+                remote: true
               });
             });
 
@@ -138,12 +146,16 @@ describe('Backbone.Collection', function () {
               this.storeRemoveSpy = this.sandbox.spy(Backbone.hoodie.store, 'remove');
 
               this.tasks.add(this.task);
-              this.events.remove(this.testAttributes, { backbone: false });
+              this.events.remove(this.testAttributes, {
+                backbone: false,
+                remote: true
+              });
             });
 
             it('removes the model from the collection', function () {
               expect(this.destroySpy).to.have.been.calledWith({
-                hoodie: true
+                hoodie: true,
+                remote: true
               });
             });
 

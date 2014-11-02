@@ -105,6 +105,7 @@
         }
 
         self.add(attributes, {
+          remote: options.remote,
           hoodie: true
         });
       });
@@ -119,6 +120,7 @@
         record = self.get(attributes.id);
         if (record) {
           record.destroy({
+            remote: options.remote,
             hoodie: true
           });
         }
@@ -134,6 +136,7 @@
         record = self.get(attributes.id);
         if (record) {
           record.set(attributes, {
+            remote: options.remote,
             hoodie: true
           });
         }
