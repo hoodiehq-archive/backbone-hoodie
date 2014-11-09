@@ -1,4 +1,5 @@
 # backbone-hoodie adapter
+[![Build Status](https://travis-ci.org/hoodiehq/backbone-hoodie.svg)](https://travis-ci.org/hoodiehq/backbone-hoodie)
 
 Use this adapter to maintain sync between your local Backbone.Collections and the local and remote hoodie datastores.
 

@@ -44,8 +44,14 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         options: {
+          configFile: 'karma.conf.js'
+        }
+      },
+      unit_watch: {
+        options: {
           configFile: 'karma.conf.js',
-          browsers: ['PhantomJS']
+          autoWatch: true,
+          singleRun: false
         }
       }
     }
@@ -53,6 +59,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['jshint', 'uglify']);
   grunt.registerTask('test', ['karma:unit']);
+  grunt.registerTask('test:watch', ['karma:unit_watch']);
 
 };
-
