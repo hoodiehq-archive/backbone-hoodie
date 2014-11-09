@@ -6,3 +6,7 @@ install:
   - npm install -g grunt-cli
   - npm install
   - bower install
+sudo: false
+cache:
+  directories:
+  - node_modules
