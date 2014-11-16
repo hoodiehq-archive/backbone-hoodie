@@ -33,6 +33,8 @@
   Backbone.sync = function (method, modelOrCollection, options) {
     var attributes, id, promise, type;
 
+    options = options || {};
+
     id = modelOrCollection.id;
     attributes = options.attrs || modelOrCollection.toJSON();
     type = modelOrCollection.type;
