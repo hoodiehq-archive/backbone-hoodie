@@ -56,16 +56,10 @@
       }
       break;
     case 'create':
-      promise = Backbone.hoodie.store.add(type, attributes, options)
-      .done(function (attributes) {
-        modelOrCollection.set(attributes);
-      });
+      promise = Backbone.hoodie.store.add(type, attributes, options);
       break;
     case 'update':
-      promise = Backbone.hoodie.store.updateOrAdd(type, id, modelOrCollection.changed, options)
-      .done(function (attributes) {
-        modelOrCollection.set(attributes);
-      });
+      promise = Backbone.hoodie.store.updateOrAdd(type, id, modelOrCollection.changed, options);
       break;
     case 'delete':
       promise = Backbone.hoodie.store.remove(type, id, options);
