@@ -55,7 +55,9 @@ Install the dependencies:
 
     npm install -g phantomjs
     npm install -g grunt-cli
+    npm install -g bower
     npm install
+    bower install
 
 Run the tests via Grunt:
 
