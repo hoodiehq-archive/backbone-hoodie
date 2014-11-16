@@ -19,7 +19,7 @@ var Task = Backbone.Model.extend({
 var TaskCollection = Backbone.Collection.extend({
   // if a collection has a model, the adapter will keep the collection
   // up to date with all the models in the local store, as well as remote events
-  model: Task 
+  model: Task
 })
 
 var task = new Task({
