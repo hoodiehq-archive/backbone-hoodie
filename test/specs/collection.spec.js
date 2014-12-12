@@ -58,16 +58,31 @@ describe('Backbone.Collection', function () {
           this.addSpy = this.sandbox.spy(this.tasks, 'add');
         });
 
-        describe('from remote', function () {
+        describe('triggered outside of backbone', function () {
+          beforeEach(function () {
+            this.storeAddSpy = this.sandbox.spy(Backbone.hoodie.store, 'add');
+
+            this.events.add(this.testAttributes, {
+              backbone: false,
+              remote: true
+            });
+          });
+
           it('adds a new model to the collection', function () {
-            this.events.add(this.testAttributes, { remote: true });
-            expect(this.addSpy).to.have.been.calledWith(this.testAttributes, { remote: true });
+            expect(this.addSpy).to.have.been.calledWith(this.testAttributes, {
+              hoodie: true,
+              remote: true
+            });
+          });
+
+          it('does not delegate to the store again', function () {
+            expect(this.storeAddSpy).to.not.have.been.called;
           });
         });
 
-        describe('from the client', function () {
+        describe('triggered from backbone', function () {
           it('does not add the model to the collection again', function () {
-            this.events.add(this.testAttributes, { remote: false });
+            this.events.add(this.testAttributes, { backbone: true });
             expect(this.addSpy).to.not.have.been.called;
           });
         });
@@ -79,26 +94,41 @@ describe('Backbone.Collection', function () {
           this.setSpy = this.sandbox.spy(this.task, 'set');
         });
 
-        describe('from remote', function () {
+        describe('triggered outside of backbone', function () {
           describe('when the model exists', function () {
-            it('updates the model', function () {
+            beforeEach(function () {
+              this.storeUpdateOrAddSpy = this.sandbox.spy(Backbone.hoodie.store, 'updateOrAdd');
+
               this.tasks.add(this.task);
-              this.events.update(this.testAttributes, { remote: true });
-              expect(this.setSpy).to.have.been.calledWith(this.testAttributes, { remote: true });
+              this.events.update(this.testAttributes, {
+                backbone: false,
+                remote: true
+              });
+            });
+
+            it('updates the model', function () {
+              expect(this.setSpy).to.have.been.calledWith(this.testAttributes, {
+                hoodie: true,
+                remote: true
+              });
+            });
+
+            it('does not delegate to the store again', function () {
+              expect(this.storeUpdateOrAddSpy).to.not.have.been.called;
             });
           });
 
           describe('when the model does not exist', function () {
             it('it does not throw an exception', function () {
-              expect(this.events.update({ id: 'unknown' }, { remote: true })).to.not.throw;
+              expect(this.events.update({ id: 'unknown' }, { backbone: false })).to.not.throw;
             });
           });
         });
 
-        describe('from the client', function () {
+        describe('triggered from backbone', function () {
           it('does not update the model again', function () {
             this.tasks.add(this.task);
-            this.events.update(this.testAttributes, { remote: false });
+            this.events.update(this.testAttributes, { backbone: true });
             expect(this.setSpy).to.not.have.been.called;
           });
         });
@@ -110,26 +140,41 @@ describe('Backbone.Collection', function () {
           this.destroySpy = this.sandbox.spy(this.task, 'destroy');
         });
 
-        describe('from remote', function () {
+        describe('triggered outside of backbone', function () {
           describe('when the model exists', function () {
-            it('removes the model from the collection', function () {
+            beforeEach(function () {
+              this.storeRemoveSpy = this.sandbox.spy(Backbone.hoodie.store, 'remove');
+
               this.tasks.add(this.task);
-              this.events.remove(this.testAttributes, { remote: true });
-              expect(this.destroySpy).to.have.been.called;
+              this.events.remove(this.testAttributes, {
+                backbone: false,
+                remote: true
+              });
+            });
+
+            it('removes the model from the collection', function () {
+              expect(this.destroySpy).to.have.been.calledWith({
+                hoodie: true,
+                remote: true
+              });
+            });
+
+            it('does not delegate to the store again', function () {
+              expect(this.storeRemoveSpy).to.not.have.been.called;
             });
           });
 
           describe('when the model does not exist', function () {
             it('it does not throw an exception', function () {
-              expect(this.events.remove({ id: 'unknown' }, { remote: true })).to.not.throw;
+              expect(this.events.remove({ id: 'unknown' }, { backbone: false })).to.not.throw;
             });
           });
         });
 
-        describe('from the client', function () {
+        describe('triggered from backbone', function () {
           it('does not add the model to the collection again', function () {
             this.tasks.add(this.task);
-            this.events.remove(this.testAttributes, { remote: false });
+            this.events.remove(this.testAttributes, { backbone: true });
             expect(this.destroySpy).to.not.have.been.called;
           });
         });

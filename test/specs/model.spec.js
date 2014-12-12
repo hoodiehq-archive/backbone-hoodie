@@ -49,23 +49,6 @@ describe('Backbone.Model', function () {
     this.sandbox.restore();
   });
 
-  describe('Backbone.Model.prototype.merge', function() {
-    it('defines Backbone.Model.prototype.merge', function() {
-      expect(Backbone.Model.prototype.merge).to.be.an.instanceof(Function);
-    });
-
-    it('calls Backbone.Model.prototype.set with the given attributes and the remote option', function() {
-      var task = new this.Task(this.taskAttributes);
-      var spy = this.sandbox.spy(task, 'set');
-
-      task.merge(this.changedTaskAttributes);
-
-      expect(spy).to.have.been.calledWith(this.changedTaskAttributes, {
-        remote: true
-      });
-    });
-  });
-
   describe('Backbone.Model.prototype.save', function() {
     describe('for a new model', function() {
       beforeEach(function () {
@@ -83,7 +66,7 @@ describe('Backbone.Model', function () {
       });
 
       it('delegates to Backbone.hoodie.store.add', function () {
-        expect(this.stub).to.have.been.calledWith('task', this.newTaskAttributes);
+        expect(this.stub).to.have.been.calledWith('task', this.newTaskAttributes, { backbone: true });
       });
 
       describe('success', function () {
@@ -127,7 +110,7 @@ describe('Backbone.Model', function () {
       });
 
       it('delegates to Backbone.hoodie.store.updateOrAdd with the changed attributes', function () {
-        expect(this.stub).to.have.been.calledWith('task', this.task.id, this.changedTaskAttributes);
+        expect(this.stub).to.have.been.calledWith('task', this.task.id, this.changedTaskAttributes, { backbone: true });
       });
 
       describe('success', function () {
@@ -216,7 +199,7 @@ describe('Backbone.Model', function () {
     });
 
     it('delegates to Backbone.hoodie.store.remove', function () {
-      expect(this.stub).to.have.been.calledWith('task', this.taskAttributes.id);
+      expect(this.stub).to.have.been.calledWith('task', this.taskAttributes.id, { backbone: true });
     });
 
     describe('success', function () {
